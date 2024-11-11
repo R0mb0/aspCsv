@@ -1,4 +1,4 @@
-#aspXLS 1.0
+# aspXLS 1.0
 
 A classic ASP Excel writer that currently supports building and writing CSV, TSV (tab separated values)
 and HTML outputing, including a pretty print for HTML.
@@ -6,7 +6,7 @@ and HTML outputing, including a pretty print for HTML.
 There are plans of writing to XLS and XLSX formats in a near future and reading capabilities for each
 of the supported file formats: CSV, TSV, XLS and XLSX.
 
-##License
+## License
 
 **The MIT License (MIT) - http://opensource.org/licenses/MIT**
 Copyright (c) 2012 RCDMK <rcdmk@rcdmk.com>
@@ -27,7 +27,7 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-##Easy to use
+## Easy to use
 
 Instantiate the class:
 
