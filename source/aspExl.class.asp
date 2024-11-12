@@ -247,30 +247,49 @@ class aspExl
 	' Loads an exl file 
 	public sub loadFromFile(byval filePath, byval table, byval headers)
 		Dim arrayDim
+		arrayDim = UBound(headers)
+		Dim temp
+		temp = 0
+		Dim element
 		Dim SQL
-		SQL = ""
-		SQL = "SELECT [ISO 3166-1], [Country Name] FROM ["& table &"]"
+		SQL = "SELECT "
+		For Each element In headers
+			If temp < arrayDim Then
+        		SQL = SQl + "["&element&"], "
+				Else 
+    			SQL = SQl + "["&element&"] "
+			End If
+			temp = temp + 1
+		Next
 		Set ExcelConnection = Server.createobject("ADODB.Connection")
 		ExcelConnection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1"";"
 		Set RS = Server.CreateObject("ADODB.Recordset")
 		RS.Open SQL, ExcelConnection
-		Response.Write "<table border=""1""><thead><tr>"
+		'Response.Write "<table border=""1""><thead><tr>"
+		temp = 0
 		For Each Column In RS.Fields
-		Response.Write "<th>" & Column.Name & "</th>"
+		'Response.Write "<th>" & Column.Name & "</th>"
+		'---xls.setHeader temp, Column.Name
+		temp = temp + 1
 		Next
 
-		Response.Write "</tr></thead><tbody>"
+		'Response.Write "</tr></thead><tbody>"
 		IF NOT RS.EOF THEN
+			temp = 0
+			Dim temp2
+			temp2 = 0 
 			WHILE NOT RS.eof
-				Response.Write "<tr>"
+				'Response.Write "<tr>"
 				FOR EACH Field IN RS.Fields
-					Response.Write "<td>" & Field.value & "</td>"
+					'Response.Write "<td>" & Field.value & "</td>"
+					'---xls.setValue temp, temp2, Field.value
 				NEXT
-				Response.Write "</tr>"
+				'Response.Write "</tr>"
 				RS.movenext
+				temp = temp + 1
 			WEND
 	END IF
-Response.Write "</tbody></table>"
+'Response.Write "</tbody></table>"
 RS.close
 ExcelConnection.Close
 	end sub
