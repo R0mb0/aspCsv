@@ -243,5 +243,36 @@ class aspExl
 		
 		set fso = nothing
 	end sub
+
+	' Loads an exl file 
+	public sub loadFromFile(byval filePath, byval table, byval headers)
+		Dim arrayDim
+		Dim SQL
+		SQL = ""
+		SQL = "SELECT [ISO 3166-1], [Country Name] FROM ["& table &"]"
+		Set ExcelConnection = Server.createobject("ADODB.Connection")
+		ExcelConnection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1"";"
+		Set RS = Server.CreateObject("ADODB.Recordset")
+		RS.Open SQL, ExcelConnection
+		Response.Write "<table border=""1""><thead><tr>"
+		For Each Column In RS.Fields
+		Response.Write "<th>" & Column.Name & "</th>"
+		Next
+
+		Response.Write "</tr></thead><tbody>"
+		IF NOT RS.EOF THEN
+			WHILE NOT RS.eof
+				Response.Write "<tr>"
+				FOR EACH Field IN RS.Fields
+					Response.Write "<td>" & Field.value & "</td>"
+				NEXT
+				Response.Write "</tr>"
+				RS.movenext
+			WEND
+	END IF
+Response.Write "</tbody></table>"
+RS.close
+ExcelConnection.Close
+	end sub
 end class
 %>
