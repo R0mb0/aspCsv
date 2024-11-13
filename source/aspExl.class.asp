@@ -104,17 +104,20 @@ class aspExl
 		toString = output
 	end function
 	
-	
-	' Sets a header value
-	public sub setHeader(byval x, byval value)
+	'set locally a header value when read from file
+	private sub setHeaderLocally(byval x, byval value)
 		if x > curBoundX then resizeCols(x)
 		
 		headers(x) = value
 	end sub
+
+	' Sets a header value
+	public sub setHeader(byval x, byval value)
+		setHeaderLocally x, value
+	end sub
 	
-	
-	' Sets the value of a cell
-	public sub setValue(byval x, byval y, byval value)
+	'Sets locally the value of a cell when read from file
+	private sub setValueLocally(byval x, byval y, byval value)
 		dim cols
 		
 		if y > curBoundY then resizeRows y		
@@ -124,6 +127,11 @@ class aspExl
 		cols(x) = value
 		
 		lines(y) = cols
+	end sub
+
+	' Sets the value of a cell
+	public sub setValue(byval x, byval y, byval value)
+		setValueLocally x, y, value
 	end sub
 	
 	
@@ -265,33 +273,28 @@ class aspExl
 		ExcelConnection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1"";"
 		Set RS = Server.CreateObject("ADODB.Recordset")
 		RS.Open SQL, ExcelConnection
-		'Response.Write "<table border=""1""><thead><tr>"
+		'Adds headers
 		temp = 0
 		For Each Column In RS.Fields
-		'Response.Write "<th>" & Column.Name & "</th>"
-		'---xls.setHeader temp, Column.Name
+		setHeaderLocally temp, Column.Name
 		temp = temp + 1
 		Next
-
-		'Response.Write "</tr></thead><tbody>"
-		IF NOT RS.EOF THEN
+		'Adds values
+		If Not RS.EOF Then
 			temp = 0
 			Dim temp2
 			temp2 = 0 
-			WHILE NOT RS.eof
-				'Response.Write "<tr>"
-				FOR EACH Field IN RS.Fields
-					'Response.Write "<td>" & Field.value & "</td>"
-					'---xls.setValue temp, temp2, Field.value
-				NEXT
-				'Response.Write "</tr>"
+			While NOT RS.eof
+				For Each Field In RS.Fields
+					setValueLocally temp, temp2, Field.value
+				Next
 				RS.movenext
 				temp = temp + 1
-			WEND
-	END IF
-'Response.Write "</tbody></table>"
+			Wend
+	End If
 RS.close
 ExcelConnection.Close
 	end sub
+
 end class
 %>
