@@ -252,48 +252,32 @@ class aspExl
 		set fso = nothing
 	end sub
 
-	' Loads an exl file 
-	public sub loadFromFile(byval filePath, byval table, byval headers)
-		Dim arrayDim
-		arrayDim = UBound(headers)
+	' Loads an csv file 
+	public sub loadFromFile(byval filePath)
+		Set fso = Server.CreateObject("Scripting.FileSystemObject") 
+		Set fs = fso.OpenTextFile(Server.MapPath("file_example_XLS_10.csv"), 1, true)
+		Dim index
+		index = 0
+		Dim temp_array
 		Dim temp
-		temp = 0
-		Dim element
-		Dim SQL
-		SQL = "SELECT "
-		For Each element In headers
-			If temp < arrayDim Then
-        		SQL = SQl + "["&element&"], "
-				Else 
-    			SQL = SQl + "["&element&"] "
-			End If
-			temp = temp + 1
-		Next
-		Set ExcelConnection = Server.createobject("ADODB.Connection")
-		ExcelConnection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1"";"
-		Set RS = Server.CreateObject("ADODB.Recordset")
-		RS.Open SQL, ExcelConnection
-		'Adds headers
-		temp = 0
-		For Each Column In RS.Fields
-		setHeaderLocally temp, Column.Name
-		temp = temp + 1
-		Next
-		'Adds values
-		If Not RS.EOF Then
-			temp = 0
-			Dim temp2
-			temp2 = 0 
-			While NOT RS.eof
-				For Each Field In RS.Fields
-					setValueLocally temp, temp2, Field.value
+		Dim temp_index
+		Do Until fs.AtEndOfStream
+			temp_array = Split(fs.ReadLine, ",")
+			If index = 0 Then 
+				temp_index = 0
+				For Each temp In temp_array
+					setHeaderLocally temp_index, temp 
+					temp_index = temp_index + 1
 				Next
-				RS.movenext
-				temp = temp + 1
-			Wend
-	End If
-RS.close
-ExcelConnection.Close
+			Else
+				temp_index = 0
+				For Each temp In temp_array
+					setValueLocally temp_index, index, temp
+					temp_index = temp_index + 1
+				Next
+			End If
+			index = index + 1
+		Loop
 	end sub
 
 end class
