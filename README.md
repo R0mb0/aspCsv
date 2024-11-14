@@ -10,7 +10,7 @@ and HTML outputing, including a pretty print for HTML.
 ### Instantiate the class:
 
 ```
-set csv = new aspExl
+set csv = new aspCsv
 ```
 
 ### Create the table
