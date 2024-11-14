@@ -48,7 +48,7 @@ set xls = new aspExl
 
 ### Access informations 
 
-**Check if a column exist**
+**Check if a column exist:**
 
 ```
 Check column existence: checkHeader(header)
