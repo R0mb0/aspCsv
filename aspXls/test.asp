@@ -81,6 +81,45 @@ option explicit
 				
 				<h4>HTML</h4>
 				<%= replace(replace(replace(outputHTML, "<table", "<table class=""table table-striped table-bordered"""), "<thead><tr>", "<thead><tr class=""alert-info"">"), "<tbody", "<tbody class=""pre-scrollable""") %>
+
+				<h4>Load informations from file</h4>
+				<%
+				xls.loadFromFile("file_example_XLS_10.csv")
+				%>
+
+				<h4>Retreive column's values</h4>
+				<%
+				dim cArray
+				cValues = xls.getColumnValues("Last Name")
+				dim temp
+				%>
+				<ul>
+				<%
+				for each temp in cValues
+				response.write("<li>temp</li>")
+				next
+				%>
+				</ul>
+
+				<h4>Retreive rows's values</h4>
+				<%
+				dim rArray
+				rValues = xls.getrowValues(3)
+				%>
+				<ul>
+				<%
+				for each temp in rValues
+				response.write("<li>temp</li>")
+				next
+				%>
+				</ul>
+
+				<h4>Retreive a cell value</h4>
+				<ul>
+				<%
+				response.write("<li>xls.getCellValue("Country", 3)</li>")
+				%>
+				</ul>
 				
 				<%	
 				set xls = nothing
