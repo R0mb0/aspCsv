@@ -32,6 +32,7 @@ class aspExl
 	dim lines(), curBoundX, curBoundY
 	dim headers()
 	dim m_prettyPrintHTML
+	dim header_index
 	
 	
 	' A flag for outputing more readable HTML
@@ -279,6 +280,31 @@ class aspExl
 			index = index + 1
 		Loop
 	end sub
+
+	'Checks if a header is present and set the it's index
+	public function checkHeader(header)
+		Dim temp 
+		Dim temp_index
+		temp_index = 0
+		For Each temp in headers
+			If temp = header Then
+				header_index = temp_index
+				checkHeader = true
+				Exit Function
+			End If
+			temp_index = temp_index + 1 
+		Next
+		checkHeader = false
+	end function
+
+	'Retreives the values of a column 
+	public function getColumnValues(byval header)
+		'Check if the header is present and get the index
+		If Not checkHeader(header) then
+			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getColumnValues", "The header does not exist: "&header&"")
+		End If 
+		getColumnValues = lines(header_index)
+	end function
 
 end class
 %>
