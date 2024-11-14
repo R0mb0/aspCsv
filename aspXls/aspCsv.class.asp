@@ -282,7 +282,7 @@ class aspExl
 	end sub
 
 	'Checks if a header is present and set the it's index
-	public function checkHeader(header)
+	public function checkHeader(byval header)
 		Dim temp 
 		Dim temp_index
 		temp_index = 0
@@ -300,10 +300,44 @@ class aspExl
 	'Retreives the values of a column 
 	public function getColumnValues(byval header)
 		'Check if the header is present and get the index
-		If Not checkHeader(header) then
-			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getColumnValues", "The header does not exist: "&header&"")
+		If Not checkHeader(header) Then
+			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getColumnValues", "The header -" & header & "- does not exist")
 		End If 
-		getColumnValues = lines(header_index)
+		'Create variables
+        Dim temp_array
+        temp_array = Array()
+        Dim temp_array_index
+        temp_array_index = 0
+        Dim temp_line
+		'extract values
+        For Each temp_line In lines
+            Redim Preserve temp_array(temp_array_index)
+            temp_array(temp_array_index) = temp_line(header_index)
+            temp_array_index = temp_array_index + 1
+        Next
+		'return
+		getColumnValues = temp_array
+	end function
+	
+	'Retreives the values of a row 
+	public function getRowValues(byval row)
+		If Not (row >=0 and row <= curBoundY) Then 
+			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
+		End If
+		getRowValues = lines(row)
+	end function
+
+	'Extract a cell value
+	public function getCellValue(byval header, byval row)
+		'Check if the header is present and get the index
+		If Not checkHeader(header) Then
+			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getCellValue", "The header -" & header & "- does not exist")
+		End If 
+		'Check if the row exist
+		If Not (row >=0 and row <= curBoundY) Then 
+			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
+		End If
+		getCellValue = getColumnValues(header)(row)
 	end function
 
 end class
