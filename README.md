@@ -10,7 +10,7 @@ and HTML outputing, including a pretty print for HTML.
 ### Instantiate the class:
 
 ```
-set xls = new aspExl
+set csv = new aspExl
 ```
 
 ### Create the table
@@ -19,21 +19,21 @@ set xls = new aspExl
 	
 ```
 ' Add a header: setHeader(x, value)
-    xls.setHeader 0, "id"
-    xls.setHeader 1, "description"
-    xls.setHeader 2, "createdAt"
+    csv.setHeader 0, "id"
+    csv.setHeader 1, "description"
+    csv.setHeader 2, "createdAt"
 ```
     
 **Add some data:**
 
 ```
 ' Add the first data row: setValue(x, y, value)
-    xls.setValue 0, 0, 1
-    xls.setValue 1, 0, "obj 1"
-    xls.setValue 2, 0, date()
+    csv.setValue 0, 0, 1
+    csv.setValue 1, 0, "obj 1"
+    csv.setValue 2, 0, date()
     
 ' Add a range of values at once: setRange(x, y, valuesArray)
-    xls.setRange 0, 2, Array(2, "obj 2", #11/25/2012#)
+    csv.setRange 0, 2, Array(2, "obj 2", #11/25/2012#)
 
 ```
 
@@ -43,7 +43,7 @@ set xls = new aspExl
 
 ```
 'Load a file:loadFromFile(path)
-   xls.loadFromFile("file_example_XLS_10.csv")
+   csv.loadFromFile("file_example_csv_10.csv")
 ```
 
 ### Access informations 
@@ -52,7 +52,7 @@ set xls = new aspExl
 
 ```
 Check column existence: checkHeader(header)
-   If xls.checkHeader("description") Then Response.write("everything is okay ")
+   If csv.checkHeader("description") Then Response.write("everything is okay ")
 ```
 
 **Get all values of a column:**
@@ -60,7 +60,7 @@ Check column existence: checkHeader(header)
 ```
 'Get column's values: getColumnValues(header)
    Dim cValues
-   cValues = xls.getColumnValues("description")
+   cValues = csv.getColumnValues("description")
 ```
 
 **Get all values of a row:**
@@ -68,7 +68,7 @@ Check column existence: checkHeader(header)
 ```
 'Get row's values: getRowValues(row)
    Dim rValues
-   rValues = xls.getRowValues(0)
+   rValues = csv.getRowValues(0)
 
 ```
 
@@ -77,7 +77,7 @@ Check column existence: checkHeader(header)
 ```
 'Get a cell's value: getCellValue(header, row)
    Dim value
-   value = xls.getCellValue "description", 0
+   value = csv.getCellValue "description", 0
 ```
  
 ### Easy for outputing:
@@ -85,27 +85,27 @@ Check column existence: checkHeader(header)
 **Output the data in string formatted values:**
 	
 ```
-outputCSV = xls.toCSV()
-outputTSV = xls.toTabSeparated()
+outputCSV = csv.toCSV()
+outputTSV = csv.toTabSeparated()
     
-outputHTML = xls.toHtmlTable()
+outputHTML = csv.toHtmlTable()
     
-xls.prettyPrintHTML = true
-outputPrettyHTML = xls.toHtmlTable()
+csv.prettyPrintHTML = true
+outputPrettyHTML = csv.toHtmlTable()
 ```
 
 **Or write it directly to a file:**
 
 ```
 ' Write the output to a file: writeToFile(filePath, format)
-	xls.writeToFile("c:\mydata.csv", ASPXLS_CSV)
+	csv.writeToFile("c:\mydata.csv", ASPcsv_CSV)
 ```
 	
 **The format flags supported are:**
 	
 ```
-ASPXLS_CSV = 1	' CSV format
-ASPXLS_TSV = 2	' Tab separeted format
-ASPXLS_HTML = 3	' HTML table format
+ASPcsv_CSV = 1	' CSV format
+ASPcsv_TSV = 2	' Tab separeted format
+ASPcsv_HTML = 3	' HTML table format
 ```
 
