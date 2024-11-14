@@ -32,7 +32,7 @@ class aspExl
 	dim lines(), curBoundX, curBoundY
 	dim headers()
 	dim m_prettyPrintHTML
-	dim header_index
+	dim headerIndex
 	
 	
 	' A flag for outputing more readable HTML
@@ -105,20 +105,16 @@ class aspExl
 		toString = output
 	end function
 	
-	'set locally a header value when read from file
-	private sub setHeaderLocally(byval x, byval value)
+
+	' Sets a header value
+	public sub setHeader(byval x, byval value)
 		if x > curBoundX then resizeCols(x)
 		
 		headers(x) = value
 	end sub
 
-	' Sets a header value
-	public sub setHeader(byval x, byval value)
-		setHeaderLocally x, value
-	end sub
-	
-	'Sets locally the value of a cell when read from file
-	private sub setValueLocally(byval x, byval y, byval value)
+	' Sets the value of a cell
+	public sub setValue(byval x, byval y, byval value)
 		dim cols
 		
 		if y > curBoundY then resizeRows y		
@@ -128,11 +124,6 @@ class aspExl
 		cols(x) = value
 		
 		lines(y) = cols
-	end sub
-
-	' Sets the value of a cell
-	public sub setValue(byval x, byval y, byval value)
-		setValueLocally x, y, value
 	end sub
 	
 	
@@ -255,6 +246,9 @@ class aspExl
 
 	' Loads an csv file 
 	public sub loadFromFile(byval filePath)
+		'Reset the status
+		class_initialize()
+		'Start reading
 		Set fso = Server.CreateObject("Scripting.FileSystemObject") 
 		Set fs = fso.OpenTextFile(Server.MapPath("file_example_XLS_10.csv"), 1, true)
 		Dim index
@@ -267,13 +261,13 @@ class aspExl
 			If index = 0 Then 
 				temp_index = 0
 				For Each temp In temp_array
-					setHeaderLocally temp_index, temp 
+					setHeader temp_index, temp 
 					temp_index = temp_index + 1
 				Next
 			Else
 				temp_index = 0
 				For Each temp In temp_array
-					setValueLocally temp_index, index, temp
+					setValue temp_index, index, temp
 					temp_index = temp_index + 1
 				Next
 			End If
@@ -288,7 +282,7 @@ class aspExl
 		temp_index = 0
 		For Each temp in headers
 			If temp = header Then
-				header_index = temp_index
+				headerIndex = temp_index
 				checkHeader = true
 				Exit Function
 			End If
@@ -312,7 +306,7 @@ class aspExl
 		'extract values
         For Each temp_line In lines
             Redim Preserve temp_array(temp_array_index)
-            temp_array(temp_array_index) = temp_line(header_index)
+            temp_array(temp_array_index) = temp_line(headerIndex)
             temp_array_index = temp_array_index + 1
         Next
 		'return
