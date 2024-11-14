@@ -9,7 +9,9 @@ and HTML outputing, including a pretty print for HTML.
 
 ### Instantiate the class:
 
-`set xls = new aspExl`
+```
+set xls = new aspExl
+```
 
 ### Create the table
 
