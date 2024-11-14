@@ -1,11 +1,11 @@
 <%
 option explicit
 
-%><!--#include file="../source/aspExl.class.asp" --><!DOCTYPE HTML>
+%><!--#include file="aspCsv.class.asp" --><!DOCTYPE HTML>
 <html lang="en-US">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>aspExl Tests</title>
+	<title>aspCsv Tests</title>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css" rel="stylesheet">
 	<style type="text/css">
 		.row-spaced-top {
@@ -17,7 +17,7 @@ option explicit
 	<div class="navbar navbar-inverse navbar-static-top">
       <div class="navbar-inner">
         <div class="container">
-          <div class="brand">aspExl &diamond; Usage Tests</div>
+          <div class="brand">aspCsv &diamond; Usage Tests</div>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@ option explicit
 				dim startTime, csv, i
 				startTime = timer
 				
-				set csv = new aspExl
+				set csv = new aspCsv
 				
 				' Add a header
 				csv.setHeader 0, "id"
