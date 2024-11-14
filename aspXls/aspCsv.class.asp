@@ -28,7 +28,7 @@ const ASPXLS_HTML = 3	' HTML table format
 
 
 ' Main class
-class aspExl
+class aspCsv
 	dim lines(), curBoundX, curBoundY
 	dim headers()
 	dim m_prettyPrintHTML
