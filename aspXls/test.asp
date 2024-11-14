@@ -26,45 +26,45 @@ option explicit
 			<div class="span12">
 				<h1 class="page-header">Examples</h1>
 				<%
-				dim startTime, xls, i
+				dim startTime, csv, i
 				startTime = timer
 				
-				set xls = new aspExl
+				set csv = new aspExl
 				
 				' Add a header
-				xls.setHeader 0, "id"
-				xls.setHeader 1, "description"
-				xls.setHeader 2, "createdAt"
+				csv.setHeader 0, "id"
+				csv.setHeader 1, "description"
+				csv.setHeader 2, "createdAt"
 				
 				' Add the first data row
-				xls.setValue 0, 0, 1
-				xls.setValue 1, 0, "obj 1"
-				xls.setValue 2, 0, date()
+				csv.setValue 0, 0, 1
+				csv.setValue 1, 0, "obj 1"
+				csv.setValue 2, 0, date()
 				
 				' Add a bigger imcomplete data row
-				xls.setValue 3, 1, "Comment"
+				csv.setValue 3, 1, "Comment"
 				
 				' Add a range of values at once
-				xls.setRange 0, 2, Array(2, "obj 2", #11/25/2012#)
+				csv.setRange 0, 2, Array(2, "obj 2", #11/25/2012#)
 				
 				
 				' Add lots of data
 				for i = 3 to 1000
-					xls.setValue 0, i, i
-					xls.setValue 1, i, "obj " & i
-					xls.setValue 2, i, now()
+					csv.setValue 0, i, i
+					csv.setValue 1, i, "obj " & i
+					csv.setValue 2, i, now()
 				next
 				
 				
 				dim outputCSV, outputTSV, outputHTML, outputPrettyHTML
 				
-				outputCSV = xls.toCSV()
-				outputTSV = xls.toTabSeparated()
+				outputCSV = csv.toCSV()
+				outputTSV = csv.toTabSeparated()
 				
-				outputHTML = xls.toHtmlTable()
+				outputHTML = csv.toHtmlTable()
 				
-				xls.prettyPrintHTML = true
-				outputPrettyHTML = xls.toHtmlTable()
+				csv.prettyPrintHTML = true
+				outputPrettyHTML = csv.toHtmlTable()
 				
 				%>
 				<h2><code>toCSV()</code></h2>
@@ -84,13 +84,13 @@ option explicit
 
 				<h4>Load informations from file</h4>
 				<%
-				xls.loadFromFile("file_example_XLS_10.csv")
+				csv.loadFromFile("file_example_csv_10.csv")
 				%>
 
 				<h4>Retreive column's values</h4>
 				<%
 				dim cArray
-				cValues = xls.getColumnValues("Last Name")
+				cValues = csv.getColumnValues("Last Name")
 				dim temp
 				%>
 				<ul>
@@ -104,7 +104,7 @@ option explicit
 				<h4>Retreive rows's values</h4>
 				<%
 				dim rArray
-				rValues = xls.getrowValues(3)
+				rValues = csv.getrowValues(3)
 				%>
 				<ul>
 				<%
@@ -117,12 +117,12 @@ option explicit
 				<h4>Retreive a cell value</h4>
 				<ul>
 				<%
-				response.write("<li>xls.getCellValue("Country", 3)</li>")
+				response.write("<li>csv.getCellValue("Country", 3)</li>")
 				%>
 				</ul>
 				
 				<%	
-				set xls = nothing
+				set csv = nothing
 				%>
 			</div>
 		</div>
