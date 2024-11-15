@@ -87,37 +87,34 @@ option explicit
 				csv.loadFromFile("file_example_csv_10.csv")
 				%>
 
-				<h4>Retreive column's values</h4>
+                <h4>Table loaded:</h4>
 				<%
-				dim cArray
-				cValues = csv.getColumnValues("Last Name")
-				dim temp
+				response.write(csv.toHtmlTable())
 				%>
+
+				<h4>Retreive column's values from "Last Name"</h4>
 				<ul>
 				<%
-				for each temp in cValues
-				response.write("<li>temp</li>")
+                dim temp
+				for each temp in csv.getColumnValues("Last Name")
+				response.write("<li>" & temp & "</li>")
 				next
 				%>
 				</ul>
 
-				<h4>Retreive rows's values</h4>
-				<%
-				dim rArray
-				rValues = csv.getrowValues(3)
-				%>
+				<h4>Retreive rows's values from "3"</h4>
 				<ul>
 				<%
-				for each temp in rValues
-				response.write("<li>temp</li>")
+				for each temp in csv.getrowValues(3)
+				response.write("<li>" & temp & "</li>")
 				next
 				%>
 				</ul>
 
-				<h4>Retreive a cell value</h4>
+				<h4>Retreive a cell value from "Country3"</h4>
 				<ul>
 				<%
-				response.write("<li>csv.getCellValue("Country", 3)</li>")
+				response.write("<li> " & csv.getCellValue("Country", 3) & "</li>")
 				%>
 				</ul>
 				

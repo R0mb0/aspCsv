@@ -249,6 +249,7 @@ class aspCsv
 		'Reset the status
 		class_initialize()
 		'Start reading
+		dim fso, fs
 		Set fso = Server.CreateObject("Scripting.FileSystemObject") 
 		Set fs = fso.OpenTextFile(Server.MapPath("file_example_XLS_10.csv"), 1, true)
 		Dim index
