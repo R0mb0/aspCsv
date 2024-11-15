@@ -87,7 +87,7 @@ option explicit
 				csv.loadFromFile("file_example_csv_10.csv")
 				%>
 
-                <h4>Table loaded:</h4>
+                		<h4>Table loaded:</h4>
 				<%
 				response.write(csv.toHtmlTable())
 				%>
@@ -95,7 +95,7 @@ option explicit
 				<h4>Retreive column's values from "Last Name"</h4>
 				<ul>
 				<%
-                dim temp
+                		dim temp
 				for each temp in csv.getColumnValues("Last Name")
 				response.write("<li>" & temp & "</li>")
 				next
