@@ -92,7 +92,7 @@ option explicit
 				response.write(csv.toHtmlTable())
 				%>
 
-				<h4>Retreive column's values from "Last Name"</h4>
+				<h4>Retrieve column's values from "Last Name"</h4>
 				<ul>
 				<%
                 		dim temp
