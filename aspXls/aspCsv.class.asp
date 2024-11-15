@@ -15,13 +15,13 @@
 ' portions of the Software.
 '
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
-' NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-' NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+' not LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS for A PARTICULAR PURPOSE AND
+' NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE for ANY CLAIM,
 ' DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
 ' OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-' Format constants
+' format constants
 const ASPXLS_CSV = 1	' CSV format
 const ASPXLS_TSV = 2	' Tab separeted format
 const ASPXLS_HTML = 3	' HTML table format
@@ -81,7 +81,7 @@ class aspCsv
 		redim preserve lines(newSize)
 		
 		for i = curBoundY + 1 to newSize
-			if i >= 0 then lines(i) = Array()
+			if i >= 0 then lines(i) = array()
 		next
 		
 		curBoundY = newSize
@@ -252,88 +252,88 @@ class aspCsv
 		dim fso, fs
 		Set fso = Server.CreateObject("Scripting.FileSystemObject") 
 		Set fs = fso.OpenTextFile(Server.MapPath("file_example_XLS_10.csv"), 1, true)
-		Dim index
+		dim index
 		index = 0
-		Dim temp_array
-		Dim temp
-		Dim temp_index
-		Do Until fs.AtEndOfStream
+		dim temp_array
+		dim temp
+		dim temp_index
+		Do Until fs.AtendOfStream
 			temp_array = Split(fs.ReadLine, ",")
-			If index = 0 Then 
+			if index = 0 then 
 				temp_index = 0
-				For Each temp In temp_array
+				for each temp In temp_array
 					setHeader temp_index, temp 
 					temp_index = temp_index + 1
-				Next
+				next
 			Else
 				temp_index = 0
-				For Each temp In temp_array
+				for each temp In temp_array
 					setValue temp_index, index, temp
 					temp_index = temp_index + 1
-				Next
-			End If
+				next
+			end if
 			index = index + 1
 		Loop
 	end sub
 
 	'Checks if a header is present and set the it's index
 	public function checkHeader(byval header)
-		Dim temp 
-		Dim temp_index
+		dim temp 
+		dim temp_index
 		temp_index = 0
-		For Each temp in headers
-			If temp = header Then
+		for each temp in headers
+			if temp = header then
 				headerIndex = temp_index
 				checkHeader = true
 				Exit Function
-			End If
+			end if
 			temp_index = temp_index + 1 
-		Next
+		next
 		checkHeader = false
 	end function
 
 	'Retreives the values of a column 
 	public function getColumnValues(byval header)
 		'Check if the header is present and get the index
-		If Not checkHeader(header) Then
-			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getColumnValues", "The header -" & header & "- does not exist")
-		End If 
+		if not checkHeader(header) then
+			call err.raise(vbObjecterror + 10, "aspCsv.class.asp - getColumnValues", "The header -" & header & "- does not exist")
+		end if 
 		'Create variables
-        Dim temp_array
-        temp_array = Array()
-        Dim temp_array_index
+        dim temp_array
+        temp_array = array()
+        dim temp_array_index
         temp_array_index = 0
-        Dim temp_line
+        dim temp_line
 		'extract values
-        For Each temp_line In lines
+        for each temp_line In lines
 			if not (isnull(temp_line(headerIndex)) or len(temp_line(headerIndex)) = 0) then
-            Redim Preserve temp_array(temp_array_index)
+            redim preserve temp_array(temp_array_index)
             temp_array(temp_array_index) = temp_line(headerIndex)
             temp_array_index = temp_array_index + 1
 			end if
-        Next
+        next
 		'return
 		getColumnValues = temp_array
 	end function
 	
 	'Retreives the values of a row 
 	public function getRowValues(byval row)
-		If Not (row > 0 and row <= curBoundY) Then 
-			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
-		End If
+		if not (row > 0 and row <= curBoundY) then 
+			call err.raise(vbObjecterror + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
+		end if
 		getRowValues = lines(row)
 	end function
 
 	'Extract a cell value
 	public function getCellValue(byval header, byval row)
 		'Check if the header is present and get the index
-		If Not checkHeader(header) Then
-			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getCellValue", "The header -" & header & "- does not exist")
-		End If 
+		if not checkHeader(header) then
+			call err.raise(vbObjecterror + 10, "aspCsv.class.asp - getCellValue", "The header -" & header & "- does not exist")
+		end if 
 		'Check if the row exist
-		If Not (row > 0 and row <= curBoundY) Then 
-			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
-		End If
+		if not (row > 0 and row <= curBoundY) then 
+			call err.raise(vbObjecterror + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
+		end if
 		getCellValue = getColumnValues(header)(row - 1)
 	end function
 
