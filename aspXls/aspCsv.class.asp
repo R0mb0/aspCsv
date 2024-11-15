@@ -306,9 +306,11 @@ class aspCsv
         Dim temp_line
 		'extract values
         For Each temp_line In lines
+			if not (isnull(temp_line(headerIndex)) or len(temp_line(headerIndex)) = 0) then
             Redim Preserve temp_array(temp_array_index)
             temp_array(temp_array_index) = temp_line(headerIndex)
             temp_array_index = temp_array_index + 1
+			end if
         Next
 		'return
 		getColumnValues = temp_array
@@ -316,7 +318,7 @@ class aspCsv
 	
 	'Retreives the values of a row 
 	public function getRowValues(byval row)
-		If Not (row >=0 and row <= curBoundY) Then 
+		If Not (row > 0 and row <= curBoundY) Then 
 			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
 		End If
 		getRowValues = lines(row)
@@ -329,10 +331,10 @@ class aspCsv
 			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getCellValue", "The header -" & header & "- does not exist")
 		End If 
 		'Check if the row exist
-		If Not (row >=0 and row <= curBoundY) Then 
+		If Not (row > 0 and row <= curBoundY) Then 
 			Call Err.Raise(vbObjectError + 10, "aspCsv.class.asp - getRowValues", "The row -" & row & "- does not exist")
 		End If
-		getCellValue = getColumnValues(header)(row)
+		getCellValue = getColumnValues(header)(row - 1)
 	end function
 
 end class
