@@ -15,7 +15,7 @@ and HTML outputing, including a pretty print for HTML.
 
 ### Instantiate the class:
 
-```
+```asp
 set csv = new aspCsv
 ```
 
@@ -23,7 +23,7 @@ set csv = new aspCsv
 
 **Add the header/titles for your structure:**
 	
-```
+```asp
 ' Add a header: setHeader(x, value)
     csv.setHeader 0, "id"
     csv.setHeader 1, "description"
@@ -32,7 +32,7 @@ set csv = new aspCsv
     
 **Add some data:**
 
-```
+```asp
 ' Add the first data row: setValue(x, y, value)
     csv.setValue 0, 0, 1
     csv.setValue 1, 0, "obj 1"
@@ -47,7 +47,7 @@ set csv = new aspCsv
 
 > This will override the old informations
 
-```
+```asp
 'Load a file:loadFromFile(path)
    csv.loadFromFile("file_example_csv_10.csv")
 ```
@@ -56,14 +56,14 @@ set csv = new aspCsv
 
 **Check if a column exist:**
 
-```
+```asp
 Check column existence: checkHeader(header)
    If csv.checkHeader("description") Then Response.write("everything is okay ")
 ```
 
 **Get all values of a column:**
 
-```
+```asp
 'Get column's values: getColumnValues(header)
    Dim cValues
    cValues = csv.getColumnValues("description")
@@ -71,7 +71,7 @@ Check column existence: checkHeader(header)
 
 **Get all values of a row:**
 
-```
+```asp
 'Get row's values: getRowValues(row)
    Dim rValues
    rValues = csv.getRowValues(0)
@@ -80,7 +80,7 @@ Check column existence: checkHeader(header)
 
 **Get a cell's value:**
 
-```
+```asp
 'Get a cell's value: getCellValue(header, row)
    Dim value
    value = csv.getCellValue "description", 0
@@ -90,7 +90,7 @@ Check column existence: checkHeader(header)
 	
 **Output the data in string formatted values:**
 	
-```
+```asp
 outputCSV = csv.toCSV()
 outputTSV = csv.toTabSeparated()
     
@@ -102,14 +102,14 @@ outputPrettyHTML = csv.toHtmlTable()
 
 **Or write it directly to a file:**
 
-```
+```asp
 ' Write the output to a file: writeToFile(filePath, format)
 	csv.writeToFile("c:\mydata.csv", ASPcsv_CSV)
 ```
 	
 **The format flags supported are:**
 	
-```
+```asp
 ASPcsv_CSV = 1	' CSV format
 ASPcsv_TSV = 2	' Tab separeted format
 ASPcsv_HTML = 3	' HTML table format
