@@ -13,7 +13,7 @@ and HTML outputing, including a pretty print for HTML.
 
 ## Easy to use
 
-### Instantiate the class:
+### Instantiate the class
 
 ```asp
 set csv = new aspCsv
@@ -22,7 +22,7 @@ set csv = new aspCsv
 ### Create the table
 
 **Add the header/titles for your structure:**
-	
+ 
 ```asp
 ' Add a header: setHeader(x, value)
     csv.setHeader 0, "id"
@@ -43,7 +43,7 @@ set csv = new aspCsv
 
 ```
 
-### Easy for reading:
+### Easy for reading
 
 > This will override the old informations
 
@@ -86,10 +86,10 @@ Check column existence: checkHeader(header)
    value = csv.getCellValue "description", 0
 ```
  
-### Easy for outputing:
-	
+### Easy for outputing
+ 
 **Output the data in string formatted values:**
-	
+ 
 ```asp
 outputCSV = csv.toCSV()
 outputTSV = csv.toTabSeparated()
@@ -104,14 +104,13 @@ outputPrettyHTML = csv.toHtmlTable()
 
 ```asp
 ' Write the output to a file: writeToFile(filePath, format)
-	csv.writeToFile("c:\mydata.csv", ASPcsv_CSV)
+ csv.writeToFile("c:\mydata.csv", ASPcsv_CSV)
 ```
-	
+ 
 **The format flags supported are:**
-	
+ 
 ```asp
-ASPcsv_CSV = 1	' CSV format
-ASPcsv_TSV = 2	' Tab separeted format
-ASPcsv_HTML = 3	' HTML table format
+ASPcsv_CSV = 1 ' CSV format
+ASPcsv_TSV = 2 ' Tab separeted format
+ASPcsv_HTML = 3 ' HTML table format
 ```
-
