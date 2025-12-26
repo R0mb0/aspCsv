@@ -19,6 +19,12 @@ and HTML outputing, including a pretty print for HTML.
 set csv = new aspCsv
 ```
 
+### Set where save the `.csv` file
+
+```asp
+filePath = "file_example_XLS_10.csv"
+```
+
 ### Create the table
 
 **Add the header/titles for your structure:**
